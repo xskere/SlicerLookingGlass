@@ -5,8 +5,8 @@ if(NOT DEFINED vtkRenderingLookingGlass_SOURCE_DIR)
   set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
   FetchContent_Populate(${proj}
     SOURCE_DIR     ${EP_SOURCE_DIR}
-    GIT_REPOSITORY https://github.com/KitwareMedical/LookingGlassVTKModule.git
-    GIT_TAG        23cd56032165848c60739898ccf613e35cbde62d  # slicer-20221024-78cc2ce
+    GIT_REPOSITORY https://github.com/cpinter/LookingGlassVTKModule
+    GIT_TAG        fd2b4611c28f2d019deaaeef58df8b35d44d7698
     QUIET
     )
   message(STATUS "Remote - ${proj} [OK]")
