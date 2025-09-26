@@ -25,40 +25,6 @@
 #include <vtkObjectFactory.h>
 
 //----------------------------------------------------------------------------
-// vtkMRMLLookingGlassViewDisplayableManagerFactory methods
-
-//----------------------------------------------------------------------------
-// Up the reference count so it behaves like New
-vtkMRMLLookingGlassViewDisplayableManagerFactory* vtkMRMLLookingGlassViewDisplayableManagerFactory::New()
-{
-  vtkMRMLLookingGlassViewDisplayableManagerFactory* instance = Self::GetInstance();
-  instance->Register(0);
-  return instance;
-}
-
-//----------------------------------------------------------------------------
-vtkMRMLLookingGlassViewDisplayableManagerFactory* vtkMRMLLookingGlassViewDisplayableManagerFactory::GetInstance()
-{
-  if(!Self::Instance)
-    {
-    // Try the factory first
-    Self::Instance = (vtkMRMLLookingGlassViewDisplayableManagerFactory*)
-                     vtkObjectFactory::CreateInstance("vtkMRMLLookingGlassViewDisplayableManagerFactory");
-
-    // if the factory did not provide one, then create it here
-    if(!Self::Instance)
-      {
-      Self::Instance = new vtkMRMLLookingGlassViewDisplayableManagerFactory;
-#ifdef VTK_HAS_INITIALIZE_OBJECT_BASE
-      Self::Instance->InitializeObjectBase();
-#endif
-      }
-    }
-  // return the instance
-  return Self::Instance;
-}
-
-//----------------------------------------------------------------------------
 vtkMRMLLookingGlassViewDisplayableManagerFactory::
     vtkMRMLLookingGlassViewDisplayableManagerFactory():Superclass()
 {
