@@ -167,16 +167,18 @@ void qMRMLLookingGlassViewPrivate::createRenderWindow()
   this->LastViewPosition[1] = 0.0;
   this->LastViewPosition[2] = 0.0;
 
-  this->RenderWindow = vtkSmartPointer<vtkOpenGLRenderWindow>::Take(
-        vtkLookingGlassInterface::CreateLookingGlassRenderWindow());
-
-  this->Renderer = vtkSmartPointer<vtkRenderer>::New();
+  // Create render window interactor
   this->Interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+  this->RenderWindow->SetInteractor(this->Interactor);
+
+  // Create MRML interactor style
   this->InteractorStyle = vtkSmartPointer<vtkMRMLThreeDViewInteractorStyle>::New();
 
-  this->Interactor->SetInteractorStyle(this->InteractorStyle);
+  // Attach it to the interactor
   this->InteractorStyle->SetInteractor(this->Interactor);
-  this->InteractorStyle->SetCurrentRenderer(this->Renderer);
+
+  // Do NOT call SetCurrentRenderer (not available anymore)
+  // Do NOT call Interactor->SetInteractorStyle(this->InteractorStyle) either
 
   this->Camera = vtkSmartPointer<vtkCamera>::New();
   this->Renderer->SetActiveCamera(this->Camera);
