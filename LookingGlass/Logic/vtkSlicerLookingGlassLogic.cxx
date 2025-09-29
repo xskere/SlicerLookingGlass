@@ -227,6 +227,27 @@ void vtkSlicerLookingGlassLogic::SetLookingGlassConnected(bool connect)
     if (this->ActiveViewNode)
       {
       this->ActiveViewNode->SetVisibility(1);
+
+      // Always set the reference view node to the first visible 3D view node
+      vtkMRMLScene* scene = this->GetMRMLScene();
+      if (scene)
+        {
+        vtkSmartPointer<vtkCollection> nodes = vtkSmartPointer<vtkCollection>::Take(
+            scene->GetNodesByClass("vtkMRMLViewNode"));
+        vtkMRMLViewNode* viewNode = nullptr;
+        vtkCollectionSimpleIterator it;
+        for (nodes->InitTraversal(it); (viewNode = vtkMRMLViewNode::SafeDownCast(
+                                          nodes->GetNextItemAsObject(it)));)
+          {
+          if (viewNode->GetVisibility() && viewNode->IsMappedInLayout())
+            {
+            // Found a view node displayed in current layout, use this
+            break;
+            }
+          }
+        // Either use a view node displayed in current layout or just any 3D view node found in the scene
+        this->ActiveViewNode->SetAndObserveReferenceViewNode(viewNode);
+        }
       }
     else
       {
