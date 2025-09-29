@@ -167,6 +167,12 @@ void qMRMLLookingGlassViewPrivate::createRenderWindow()
   this->LastViewPosition[1] = 0.0;
   this->LastViewPosition[2] = 0.0;
 
+  // Ensure render window exists
+  if (!this->RenderWindow)
+  {
+    this->RenderWindow = vtkSmartPointer<vtkWin32LookingGlassRenderWindow>::New();
+  }
+
   // Create render window interactor
   this->Interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
   this->RenderWindow->SetInteractor(this->Interactor);
@@ -174,24 +180,29 @@ void qMRMLLookingGlassViewPrivate::createRenderWindow()
   // Create MRML interactor style
   this->InteractorStyle = vtkSmartPointer<vtkMRMLThreeDViewInteractorStyle>::New();
 
-  // Attach it to the interactor
-  this->InteractorStyle->SetInteractor(this->Interactor);
+  if (this->Interactor && this->InteractorStyle)
+  {
+    this->InteractorStyle->SetInteractor(this->Interactor);
+  }
 
-  // Do NOT call SetCurrentRenderer (not available anymore)
-  // Do NOT call Interactor->SetInteractorStyle(this->InteractorStyle) either
-
+  // Now safe to continue
   this->Camera = vtkSmartPointer<vtkCamera>::New();
-  this->Renderer->SetActiveCamera(this->Camera);
-  this->RenderWindow->SetMultiSamples(0);
-  this->RenderWindow->AddRenderer(this->Renderer);
-  this->RenderWindow->SetInteractor(this->Interactor);
 
-  // The interactor never calls Render() on the render window.
+  if (!this->Renderer)
+  {
+    this->Renderer = vtkSmartPointer<vtkRenderer>::New();
+    this->Renderer->SetBackground(0.1, 0.1, 0.1);
+    this->Renderer->SetActiveCamera(this->Camera);
+    this->RenderWindow->SetMultiSamples(0);
+    this->RenderWindow->AddRenderer(this->Renderer);  // attach renderer to window
+  }
+
+  // Interactor already attached above, no need to repeat
   this->Interactor->SetEnableRender(false);
 
   // Ensure this view catches all render requests and ensure the desired framerate
   this->qvtkReconnect(this->RenderWindow->GetInteractor(), this->Interactor,
-                vtkCommand::RenderEvent, q, SLOT(scheduleRender()));
+                  vtkCommand::RenderEvent, q, SLOT(scheduleRender()));
 
   vtkMRMLLookingGlassViewDisplayableManagerFactory* factory
     = vtkMRMLLookingGlassViewDisplayableManagerFactory::GetInstance();
