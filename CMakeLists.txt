@@ -45,7 +45,7 @@ endif()
 add_subdirectory(LookingGlass)
 ## NEXT_MODULE
 #-----------------------------------------------------------------------------
-# Install HoloPlayCore
+# Install LookingGlassBridge runtime library
 if(NOT APPLE)
   install(
     FILES ${HoloPlayCore_RUNTIME_LIBRARY}

@@ -256,6 +256,7 @@ void vtkSlicerLookingGlassLogic::SetLookingGlassConnected(bool connect)
     }
   else
     {
+    this->SetLookingGlassActive(false);
     if (this->ActiveViewNode)
       {
       this->ActiveViewNode->SetVisibility(0);

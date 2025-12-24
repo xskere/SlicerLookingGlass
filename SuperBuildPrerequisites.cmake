@@ -18,9 +18,11 @@ if(NOT EXISTS "${vtkRenderingLookingGlass_SOURCE_DIR}")
   message(FATAL_ERROR "vtkRenderingLookingGlass_SOURCE_DIR [${vtkRenderingLookingGlass_SOURCE_DIR}] variable is corresponds to nonexistent directory")
 endif()
 
-# Download HoloPlayCore and set variables HoloPlayCore_INCLUDE_DIR, HoloPlayCore_LIBRARY
-# and HoloPlayCore_RUNTIME_LIBRARY.
-include(${vtkRenderingLookingGlass_SOURCE_DIR}/FetchHoloPlayCore.cmake)
+# Set LookingGlassBridge paths from vtkRenderingLookingGlass
+# The FindHoloPlayCore.cmake in vtkRenderingLookingGlass will set these variables
+# lib.exe needs to be in path to create the .lib and .exp for the new LookingGlassBridge SDK
+# as the program only comes with the .h and .dll files
+include(${vtkRenderingLookingGlass_SOURCE_DIR}/FindHoloPlayCore.cmake)
 
 mark_as_superbuild(
   VARS
