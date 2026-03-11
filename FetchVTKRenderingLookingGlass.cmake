@@ -6,7 +6,7 @@ if(NOT DEFINED vtkRenderingLookingGlass_SOURCE_DIR)
   FetchContent_Populate(${proj}
     SOURCE_DIR     ${EP_SOURCE_DIR}
     GIT_REPOSITORY https://github.com/xskere/LookingGlassVTKModule
-    GIT_TAG        c0012e4a28faa59b067e24422cc92c6f1828528a
+    GIT_TAG        b4e8191b3ccb566d6d2f6e2ce8c564a30bfc5181
     QUIET
     )
   message(STATUS "Remote - ${proj} [OK]")
