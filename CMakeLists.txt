@@ -43,6 +43,7 @@ endif()
 #-----------------------------------------------------------------------------
 # Extension modules
 add_subdirectory(LookingGlass)
+add_subdirectory(LookingGlassSettings)
 ## NEXT_MODULE
 #-----------------------------------------------------------------------------
 # Install LookingGlassBridge runtime library
