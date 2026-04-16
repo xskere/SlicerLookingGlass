@@ -35,7 +35,11 @@ vtkMRMLLookingGlassViewNode::vtkMRMLLookingGlassViewNode()
   , UseClippingLimits(false)
   , NearClippingLimit(0.8)
   , FarClippingLimit(1.2)
-
+  , DeviceType("")
+  , QuiltTilesX(0)
+  , QuiltTilesY(0)
+  , QuiltWidth(0)
+  , QuiltHeight(0)
 {
   this->Visibility = 0; // hidden by default to not connect to the headset until it is needed
   this->BackgroundColor[0] = this->defaultBackgroundColor()[0];
@@ -68,6 +72,11 @@ void vtkMRMLLookingGlassViewNode::WriteXML(ostream& of, int nIndent)
   vtkMRMLWriteXMLBooleanMacro(useClippingLimits, UseClippingLimits);
   vtkMRMLWriteXMLFloatMacro(nearClippingLimit, NearClippingLimit);
   vtkMRMLWriteXMLFloatMacro(farClippingLimit, FarClippingLimit);
+  vtkMRMLWriteXMLStdStringMacro(deviceType, DeviceType);
+  vtkMRMLWriteXMLIntMacro(quiltTilesX, QuiltTilesX);
+  vtkMRMLWriteXMLIntMacro(quiltTilesY, QuiltTilesY);
+  vtkMRMLWriteXMLIntMacro(quiltWidth, QuiltWidth);
+  vtkMRMLWriteXMLIntMacro(quiltHeight, QuiltHeight);
   vtkMRMLWriteXMLEndMacro();
 }
 
@@ -84,6 +93,11 @@ void vtkMRMLLookingGlassViewNode::ReadXMLAttributes(const char** atts)
   vtkMRMLReadXMLBooleanMacro(useClippingLimits, UseClippingLimits);
   vtkMRMLReadXMLFloatMacro(nearClippingLimit, NearClippingLimit);
   vtkMRMLReadXMLFloatMacro(farClippingLimit, FarClippingLimit);
+  vtkMRMLReadXMLStdStringMacro(deviceType, DeviceType);
+  vtkMRMLReadXMLIntMacro(quiltTilesX, QuiltTilesX);
+  vtkMRMLReadXMLIntMacro(quiltTilesY, QuiltTilesY);
+  vtkMRMLReadXMLIntMacro(quiltWidth, QuiltWidth);
+  vtkMRMLReadXMLIntMacro(quiltHeight, QuiltHeight);
   vtkMRMLReadXMLEndMacro();
 
   this->EndModify(disabledModify);
@@ -104,6 +118,11 @@ void vtkMRMLLookingGlassViewNode::Copy(vtkMRMLNode* anode)
   vtkMRMLCopyBooleanMacro(UseClippingLimits);
   vtkMRMLCopyFloatMacro(NearClippingLimit);
   vtkMRMLCopyFloatMacro(FarClippingLimit);
+  vtkMRMLCopyStdStringMacro(DeviceType);
+  vtkMRMLCopyIntMacro(QuiltTilesX);
+  vtkMRMLCopyIntMacro(QuiltTilesY);
+  vtkMRMLCopyIntMacro(QuiltWidth);
+  vtkMRMLCopyIntMacro(QuiltHeight);
   vtkMRMLCopyEndMacro();
 
   this->EndModify(disabledModify);
@@ -120,6 +139,11 @@ void vtkMRMLLookingGlassViewNode::PrintSelf(ostream& os, vtkIndent indent)
   vtkMRMLPrintBooleanMacro(UseClippingLimits);
   vtkMRMLPrintFloatMacro(NearClippingLimit);
   vtkMRMLPrintFloatMacro(FarClippingLimit);
+  vtkMRMLPrintStdStringMacro(DeviceType);
+  vtkMRMLPrintIntMacro(QuiltTilesX);
+  vtkMRMLPrintIntMacro(QuiltTilesY);
+  vtkMRMLPrintIntMacro(QuiltWidth);
+  vtkMRMLPrintIntMacro(QuiltHeight);
   vtkMRMLPrintEndMacro();
 }
 

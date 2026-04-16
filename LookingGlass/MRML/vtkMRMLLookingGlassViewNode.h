@@ -119,6 +119,30 @@ public:
   vtkGetMacro(FarClippingLimit, double);
   vtkSetMacro(FarClippingLimit, double);
 
+  /// Device type string used to select the quilt tile preset.
+  /// Corresponds to the device type keys in vtkLookingGlassInterface
+  /// (e.g. "portrait", "large", "16_gen3_l"). An empty string means
+  /// "use whatever the connected device reports".
+  vtkGetMacro(DeviceType, std::string);
+  vtkSetMacro(DeviceType, std::string);
+
+  /// Custom quilt tile columns (X). When both QuiltTilesX and QuiltTilesY
+  /// are non-zero the custom tile counts override the device-type preset.
+  vtkGetMacro(QuiltTilesX, int);
+  vtkSetMacro(QuiltTilesX, int);
+
+  /// Custom quilt tile rows (Y).
+  vtkGetMacro(QuiltTilesY, int);
+  vtkSetMacro(QuiltTilesY, int);
+
+  /// Custom quilt texture width in pixels.
+  vtkGetMacro(QuiltWidth, int);
+  vtkSetMacro(QuiltWidth, int);
+
+  /// Custom quilt texture height in pixels.
+  vtkGetMacro(QuiltHeight, int);
+  vtkSetMacro(QuiltHeight, int);
+
   /// Return true if an error has occurred.
   /// "Connected" member requests connection but this method can tell if the
   /// hardware connection has been actually successfully established.
@@ -139,6 +163,11 @@ protected:
   bool UseClippingLimits;
   double NearClippingLimit;
   double FarClippingLimit;
+  std::string DeviceType;
+  int QuiltTilesX;
+  int QuiltTilesY;
+  int QuiltWidth;
+  int QuiltHeight;
 
   std::string LastErrorMessage;
 

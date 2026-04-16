@@ -360,6 +360,31 @@ void qMRMLLookingGlassViewPrivate::updateWidgetFromMRML()
       // Trigger re-render
       cameraNode->Modified();
       }
+
+    // Device type — reinitialize the interface when changed
+    std::string deviceType = this->MRMLLookingGlassViewNode->GetDeviceType();
+    if (!deviceType.empty() && deviceType != q->lookingGlassTnterface()->GetDeviceType())
+      {
+      q->lookingGlassTnterface()->ReleaseGraphicsResources(this->RenderWindow);
+      q->lookingGlassTnterface()->SetDeviceType(deviceType);
+      q->lookingGlassTnterface()->Initialize();
+      }
+
+    // Custom quilt settings — applied when all four values are non-zero
+    int tilesX  = this->MRMLLookingGlassViewNode->GetQuiltTilesX();
+    int tilesY  = this->MRMLLookingGlassViewNode->GetQuiltTilesY();
+    int quiltW  = this->MRMLLookingGlassViewNode->GetQuiltWidth();
+    int quiltH  = this->MRMLLookingGlassViewNode->GetQuiltHeight();
+    if (tilesX > 0 && tilesY > 0 && quiltW > 0 && quiltH > 0)
+      {
+      vtkLookingGlassInterface* iface = q->lookingGlassTnterface();
+      if (iface->GetQuiltTiles()[0] != tilesX || iface->GetQuiltTiles()[1] != tilesY ||
+          iface->GetQuiltSize()[0]  != quiltW  || iface->GetQuiltSize()[1]  != quiltH)
+        {
+        iface->ReleaseGraphicsResources(this->RenderWindow);
+        iface->SetCustomQuiltSettings(tilesX, tilesY, quiltW, quiltH);
+        }
+      }
   }
 
   if (this->MRMLLookingGlassViewNode->GetActive())
